@@ -22,7 +22,7 @@ while True:
     # Get user input
     userInput = input("Type your message: ")
     message = f"{userAccount['username']} {userAccount['hash']} {userInput}"
-
+    
     # Send data
     try:
         message.split(" ")[1]
@@ -31,8 +31,5 @@ while True:
     s.sendall(message.encode())
 
     # Receive data
-    # data = s.recv(256)
-    # print(data.decode())
-
-# Close the connection
-s.close()
+    data = s.recv(256)
+    print(data.decode())
