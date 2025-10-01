@@ -3,8 +3,14 @@ import socket
 s = socket.socket()
 
 # Connect the socket to a server
-server = ("time.nist.gov", 13)
+server = ("localhost", 3096)
 s.connect(server)
+
+userInput = input("Type your message: ")
+
+# Send data
+
+s.sendall(userInput.encode())
 
 # Receive data
 data = s.recv(256)
