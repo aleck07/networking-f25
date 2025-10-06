@@ -19,7 +19,7 @@ while True:
     data = b""
     while True:
         d = new_socket.recv(100)
-        data += d
+        data = data + d
         if "\r\n\r\n" in d.decode("ISO-8859-1"):
             break
     new_socket.sendall(request.encode("ISO-8859-1"))
