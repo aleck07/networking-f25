@@ -1,9 +1,8 @@
 def pack_ip(ip):
-    ip = ip.split(".")
-    ip_hex = b""
-    for byte in ip:
-        ip_hex += int(byte).to_bytes(1, "big")
-    return ip_hex
+    ip_serial = b""
+    for byte in ip.split("."):
+        ip_serial += int(byte).to_bytes(1, "big")
+    return ip_serial
 
 
 test_data = (
