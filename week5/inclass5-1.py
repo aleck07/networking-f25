@@ -1,3 +1,4 @@
+import time
 # IP address to decimal value
 # Decimal value to ip address
 # Answers:
@@ -30,8 +31,14 @@ def decimal_to_ip(decimal):
 ip = ["192.168.1.2", "10.20.30.40", "127.0.0.1"]
 decimal = [3325256824, 3405803976, 3221225987]
 
+start_time = time.time()
 for addr in ip:
     print(ip_to_decimal(addr))
+stop_time = time.time()
+print(f"Time taken for IP-Decimal: {stop_time-start_time}")   
 
+start_time = time.time()
 for value in decimal:
     print(decimal_to_ip(value))
+stop_time = time.time()
+print(f"Time taken for Decimal-IP: {stop_time-start_time}")
