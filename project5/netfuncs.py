@@ -14,9 +14,9 @@ def ipv4_to_value(ipv4_addr):
     ipv4_addr: "1.2.3.4"
     return:    16909060  (Which is 0x01020304 hex)
     """
-
-    # TODO -- write me!
-    pass
+    octets = ipv4_addr.split('.')
+    value = (int(octets[0]) << 24) | (int(octets[1]) << 16) | (int(octets[2]) << 8) | int(octets[3])
+    return value
 
 def value_to_ipv4(addr):
     """
@@ -33,9 +33,7 @@ def value_to_ipv4(addr):
     addr:   0x01020304 0b00000001000000100000001100000100 16909060
     return: "1.2.3.4"
     """
-
-    # TODO -- write me!
-    pass
+    return f"{(addr >> 24) & 0xff}.{(addr >> 16) & 0xff}.{(addr >> 8) & 0xff}.{addr & 0xff}"
 
 def get_subnet_mask_value(slash):
     """
@@ -55,9 +53,10 @@ def get_subnet_mask_value(slash):
     slash:  "10.20.30.40/23"
     return: 0xfffffe00 0b11111111111111111111111000000000 4294966784
     """
-
-    # TODO -- write me!
-    pass
+    slash = slash.split('/')[1]
+    bits = int(slash)
+    mask = (0xffffffff << (32 - bits)) & 0xffffffff
+    return mask
 
 def ips_same_subnet(ip1, ip2, slash):
     """
@@ -85,9 +84,10 @@ def ips_same_subnet(ip1, ip2, slash):
     slash:  "/16"
     return: False
     """
-
-    # TODO -- write me!
-    pass
+    ip1_value = ipv4_to_value(ip1)
+    ip2_value = ipv4_to_value(ip2)
+    netmask_value = get_subnet_mask_value(slash)
+    return (ip1_value & netmask_value) == (ip2_value & netmask_value)
 
 def get_network(ip_value, netmask):
     """
@@ -99,9 +99,8 @@ def get_network(ip_value, netmask):
     netmask:  0xffffff00
     return:   0x01020300
     """
+    return ip_value & netmask
 
-    # TODO -- write me!
-    pass
 
 def find_router_for_ip(routers, ip):
     """
@@ -141,22 +140,22 @@ def find_router_for_ip(routers, ip):
     ip: "1.2.5.6"
     return: None
     """
-
-    # TODO -- write me!
-    pass
+    for router_ip, router_info in routers.items():
+        netmask = router_info["netmask"]
+        if ips_same_subnet(router_ip, ip, netmask):
+            return router_ip
+    return None
 
 # Uncomment this code to have it run instead of the real main.
 # Be sure to comment it back out before you submit!
-"""
-def my_tests():
-    print("-------------------------------------")
-    print("This is the result of my custom tests")
-    print("-------------------------------------")
+# def my_tests():
+#     print("-------------------------------------")
+#     print("This is the result of my custom tests")
+#     print("-------------------------------------")
 
-    print(x)
+#     print(x)
 
-    # Add custom test code here
-"""
+#     # Add custom test code here
 
 ## -------------------------------------------
 ## Do not modify below this line
