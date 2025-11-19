@@ -20,13 +20,15 @@ def run_server(port):
                 new_conn = read_socket.accept()
                 new_socket = new_conn[0]
                 read_set.add(new_socket)
+                print(f"{new_socket.getpeername()}: connected")
             else:
                 data = read_socket.recv(1024)
                 if not data:
+                    print(f"{read_socket.getpeername()}: disconnected")
                     read_set.remove(read_socket)
                     read_socket.close()
                 else:
-                    print(data.decode().strip())
+                    print(f"{read_socket.getpeername()}: {len(data)} bytes: {data!r}")
 
 #--------------------------------#
 # Do not modify below this line! #
